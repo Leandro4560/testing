@@ -1,151 +1,318 @@
-# API REST Spring Boot - Sistema de Alerta Financiera Temprana
-Proyecto de No Country enfocado en desarrollar una herramienta de gestion de finanzas para usuarios.
+# API REST - Sistema de Alerta Financiera Temprana
 
-## Descripción
-Aplicación integral desarrollada para gestionar las finanzas de los usuarios, integrando un backend robusto en Spring Boot con servicios de Machine Learning basados en Python para la categorización automática de gastos y el análisis de perfiles de riesgo financiero.
+Proyecto backend en Spring Boot para gestionar usuarios, gastos financieros y evaluación de riesgo financiero. La solución está pensada para calcular señales tempranas de salud económica, clasificar perfiles financieros y facilitar la gestión de transacciones asociadas a cada cliente.
+
+## Descripción general
+
+La API permite:
+
+- Registrar y consultar usuarios financieros.
+- Registrar y consultar gastos asociados a cada usuario.
+- Evaluar indicadores de salud financiera como ahorro neto, DTI, gastos esenciales y meses de supervivencia.
+- Filtrar usuarios por perfil financiero.
+- Integrar un cálculo adicional con un servicio Python para el análisis predictivo.
 
 ## Objetivo
-Brindar a los usuarios una plataforma automatizada que permita registrar y clasificar transacciones, evaluar métricas de salud económica (como ratios de endeudamiento y supervivencia) y predecir perfiles financieros mediante modelos predictivos.
+
+Brindar una herramienta de gestión financiera para visualizar de forma rápida y estructurada la situación económica de cada usuario, detectando señales de riesgo y permitiendo una mejor toma de decisiones.
 
 ## Funcionalidades principales
-* **Gestión de Usuarios y Clientes Financieros:** Registro y control de datos económicos (ingresos fijos y variables, ahorros, deudas y gastos).
-* **Cálculo Financiero Automatizado:** Evaluación de ratios de ahorro neto, DTI (endeudamiento), gastos esenciales, estilo de vida y meses de supervivencia.
-* **Predicción de Perfil Financiero:** Integración con un modelo de Machine Learning para clasificar el perfil de riesgo del usuario.
-* **Gestión de Gastos por Usuario:** Registro de transacciones individuales asociadas a cada cliente, abarcando detalles como tienda, monto, método de pago y carácter esencial.
-* **Categorización Automática:** Capacidad de enviar datos de gastos para su clasificación a través de artefactos de Machine Learning hosteados en la nube.
 
-## Herramientas y tecnologías
-* Java / Spring Boot: Framework para el desarrollo de la API REST del backend.  
-* Spring Data JPA / Hibernate: Mapeo objeto-relacional para la persistencia de datos.
-* Python / Flask: Microservicio encargado de la ejecución de lógica financiera y modelos de Machine Learning.
-* Pandas / Scikit-learn / Joblib: Procesamiento de datos y ejecución de modelos predictivos.
-* MySQL: Sistema de gestión de base de datos relacional.
-* Oracle Cloud Infrastructure (OCI) Object Storage: Almacenamiento en la nube para los artefactos de modelos de Machine Learning.
-* Requests: Cliente HTTP para la comunicación entre servicios.
+- Gestión de usuarios y clientes financieros.
+- Registro y consulta de gastos por usuario.
+- Cálculo de ratios financieros y métricas clave.
+- Perfilamiento financiero por riesgo.
+- Persistencia relacional en MySQL.
+- Arquitectura REST con Spring Boot.
+- Despliegue operativo en una instancia OCI con acceso público en el puerto 8080.
 
+## Stack tecnológico
 
-## Estructura del repositorio
+- Java 21
+- Spring Boot 4.1.0
+- Spring Web MVC
+- Spring Data JPA / Hibernate
+- MySQL 8
+- Maven
+- OCI (Oracle Cloud Infrastructure) VM
+- systemd para servicio del backend
 
-```
-├── apirest/                               # Proyecto principal en Spring Boot (Java)
-│   ├── src/main/java/team08/apirest/
-│   │   ├── controllers/                   # Controladores REST (GastoController, UsuarioController)
-│   │   ├── models/                        # Entidades JPA (GastoModel, UsuarioModel)
-│   │   ├── repositories/                  # Interfaces de acceso a datos (GastoRepository, UsuarioRepository)
-│   │   └── services/                      # Lógica de negocio e integración (GastoService, UsuarioService)
-│   └── src/main/resources/
-│       └── application.properties         # Configuración de conexión y base de datos
-├── app.py                                 # Microservicio en Flask (Python) para ML y cálculos
-└── README.md                              # Documentación general del proyecto
-
-```
-
-## Documentación
-### Endpoints de la API REST (Spring Boot)
-### Módulo de Gastos 
-**Obtener todos los gastos**
+## Estructura del proyecto
 
 ```text
-URL: /api/gastos
-Método:GET  
-```
-**Descripción:** Retorna una lista con todos los registros de gastos almacenados. 
-
-
-**Registrar un nuevo gasto**
-```text
-URL: /api/gastos  
-Método: POST  
-```
-**Descripción:** Guarda un nuevo gasto asociado a un cliente.
-
-
-**Obtener gastos por cliente**
-
-```text
-URL: /api/gastos/cliente/{idCliente}  
-Método: GET  
-
-```
-**Descripción:** Filtra y devuelve todos los gastos pertenecientes a un cliente específico mediante su ID. 
-
-**Obtener un gasto por ID**
-
-```text
-URL: /api/gastos/{id}  
-Método: GET 
-
-``` 
-**Descripción:** Busca y retorna un registro de gasto particular a través de su identificador. 
-
-**Eliminar un gasto**
-
-```text
-URL: /api/gastos/{id}  
-Método: DELETE  
-
-```
-**Descripción:** Elimina el gasto correspondiente al ID proporcionado. 
-
-
-### Módulo de Usuarios / Clientes Financieros
-
-**Obtener todos los usuarios**
-
-```text
-URL: /api/usuarios  
-Método: GET 
-
-``` 
-**Descripción:** Lista todos los clientes financieros registrados.
-
-
-**Registrar un usuarioURL:** 
-
-```text
-URL: /api/usuarios  
-Método: POST 
-
-``` 
-**Descripción:** Envía los datos financieros del usuario al microservicio de Python (/calcular-finanzas) para procesar ratios y perfilar el riesgo antes de guardarlos en MySQL.
-
-**Obtener usuario por ID**
-
-```text
-URL: /api/usuarios/{id}  
-Método: GET 
-
-``` 
-**Descripción:** Retorna la información detallada de un usuario específico según su ID. 
- 
-**Eliminar usuario**
-
-```text
-URL: /api/usuarios/{id}  
-Método: DELETE  
-
+apirest/
+├── src/
+│   ├── main/
+│   │   ├── java/
+│   │   │   └── team08/apirest/
+│   │   │       ├── controllers/
+│   │   │       │   ├── GastoController.java
+│   │   │       │   └── UsuarioController.java
+│   │   │       ├── models/
+│   │   │       │   ├── GastoModel.java
+│   │   │       │   └── UsuarioModel.java
+│   │   │       ├── repositories/
+│   │   │       │   ├── GastoRepository.java
+│   │   │       │   └── UsuarioRepository.java
+│   │   │       ├── services/
+│   │   │       │   ├── GastoService.java
+│   │   │       │   └── UsuarioService.java
+│   │   │       ├── ApirestApplication.java
+│   │   │       └── ServletInitializer.java
+│   │   └── resources/
+│   │       └── application.properties
+│   └── test/
+│       └── java/team08/apirest/ApirestApplicationTests.java
+├── pom.xml
+├── mvnw
+├── mvnw.cmd
+├── readme.md
+└── target/
 ```
 
-**Descripción:** Da de baja a un usuario del sistema mediante su identificador. 
+## Requisitos de ejecución
 
+- Java 21
+- Maven
+- MySQL Server
+- Acceso SSH a la infraestructura OCI si se desea desplegar en servidor
 
-**Filtrar usuarios por perfil financiero**
+## Configuración local
 
-```text
-URL: /api/usuarios/{perfilFinanciero}  
-Método: GET  
+Archivo principal:
 
+```properties
+spring.application.name=apirest
+server.address=0.0.0.0
+server.port=8080
+
+spring.datasource.url=jdbc:mysql://127.0.0.1:3306/apirest?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+spring.datasource.username=root
+spring.datasource.password=root
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQLDialect
 ```
-**Descripción:** Permite buscar usuarios agrupados por su categoría de perfil de riesgo.
 
-**Filtrar usuarios con meses de supervivencia activos**
+### Ejecutar localmente
 
-```text
-URL: /api/usuarios/{meses_supervivencia}  
-Método: GET  
-
+```bash
+cd apirest
+./mvnw clean package -DskipTests
+java -jar target/apirest-0.0.1-SNAPSHOT.war --server.port=8080
 ```
-**Descripción:** Retorna aquellos usuarios cuyos meses de supervivencia estimados sean mayores a cero. 
 
-## Equipo de trabajo
-Equipo: Grupo de Desarrollo del equipo 8.
+## Despliegue en OCI
+
+El backend quedó configurado y ejecutándose en una instancia OCI con acceso público en el puerto 8080.
+
+### Datos de despliegue verificados
+
+- IP pública: 146.181.60.43
+- Usuario: ubuntu
+- Puerto: 8080
+- URL base: http://146.181.60.43:8080
+
+### Pasos de despliegue usados
+
+1. Instalar Java 21 y Maven en la VM.
+2. Instalar y preparar MySQL.
+3. Crear la base de datos `apirest`.
+4. Ajustar la autenticación de MySQL para permitir `root@localhost` con `mysql_native_password`.
+5. Compilar el proyecto con Maven.
+6. Subir el artefacto WAR a la VM.
+7. Crear un servicio `systemd` para arrancar la aplicación automáticamente.
+
+### Servicio systemd
+
+```ini
+[Unit]
+Description=API REST Backend
+After=network.target mysql.service
+
+[Service]
+User=ubuntu
+WorkingDirectory=/home/ubuntu
+ExecStart=/usr/lib/jvm/java-21-openjdk-amd64/bin/java -jar /home/ubuntu/apirest.war --server.port=8080
+Restart=always
+RestartSec=10
+Environment=SPRING_DATASOURCE_URL=jdbc:mysql://127.0.0.1:3306/apirest?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+Environment=SPRING_DATASOURCE_USERNAME=root
+Environment=SPRING_DATASOURCE_PASSWORD=root
+StandardOutput=append:/home/ubuntu/apirest.log
+StandardError=append:/home/ubuntu/apirest.log
+
+[Install]
+WantedBy=multi-user.target
+```
+
+### Comandos de gestión del servicio
+
+```bash
+sudo systemctl status apirest
+sudo systemctl restart apirest
+sudo journalctl -u apirest -f
+```
+
+## Endpoints de la API REST
+
+### Módulo de gastos
+
+#### 1) Listar todos los gastos
+
+```http
+GET /api/gastos
+```
+
+#### 2) Registrar un gasto
+
+```http
+POST /api/gastos
+Content-Type: application/json
+```
+
+Ejemplo de body:
+
+```json
+{
+  "nombreTienda": "Supermercado",
+  "subcategoria": "Alimentos",
+  "monto": 1500.5,
+  "metodoPago": "Tarjeta",
+  "esencial": true,
+  "categoriaPrincipal": "Hogar",
+  "usuario": {
+    "id": 1
+  }
+}
+```
+
+#### 3) Obtener gastos por cliente
+
+```http
+GET /api/gastos/cliente/{idCliente}
+```
+
+#### 4) Obtener gasto por ID
+
+```http
+GET /api/gastos/{id}
+```
+
+#### 5) Eliminar gasto
+
+```http
+DELETE /api/gastos/{id}
+```
+
+### Módulo de usuarios
+
+#### 1) Listar usuarios
+
+```http
+GET /api/usuarios
+```
+
+#### 2) Registrar usuario
+
+```http
+POST /api/usuarios
+Content-Type: application/json
+```
+
+Ejemplo de ejemplo:
+
+```json
+{
+  "nombre": "Ana",
+  "password": "123456",
+  "email": "ana@email.com",
+  "ingresoMensualFijo": 2500000,
+  "ingresoMensualVariable": 500000,
+  "ingresoMensual": 3000000,
+  "gastosEsencialesMensuales": 1200000,
+  "gastosNoEsencialesMensuales": 400000,
+  "gastosTotalesDelMes": 1600000,
+  "cuotasMensualesDeuda": 300000,
+  "ahorroMensual": 700000,
+  "ahorroTotal": 8000000,
+  "perfilFinanciero": "Estable",
+  "mesesSupervivencia": 8
+}
+```
+
+#### 3) Obtener usuario por ID
+
+```http
+GET /api/usuarios/{id}
+```
+
+#### 4) Eliminar usuario
+
+```http
+DELETE /api/usuarios/{id}
+```
+
+#### 5) Filtrar usuarios por perfil financiero
+
+```http
+GET /api/usuarios/{perfilFinanciero}
+```
+
+#### 6) Filtrar usuarios con supervivencia > 0
+
+```http
+GET /api/usuarios/{meses_supervivencia}
+```
+
+## Observaciones del proyecto
+
+- La aplicación utiliza JPA para mapear entidades y persistirlas en MySQL.
+- La estructura de entidades incluye una relación entre `UsuarioModel` y `GastoModel`.
+- La conexión a la base de datos se gestiona por Spring Boot HikariCP.
+- La variable `spring.jpa.hibernate.ddl-auto=update` permite crear o actualizar tablas automáticamente al arrancar la aplicación.
+
+## Problemas comunes y soluciones
+
+### Error: Java version unsupported
+
+Si el backend falla con `UnsupportedClassVersionError`, significa que se compiló con Java más reciente que la versión disponible en la VM.
+
+Solución:
+
+```bash
+sudo apt-get install openjdk-21-jdk
+```
+
+Y compilar de nuevo con Java 21.
+
+### Error: Access denied for user 'root'@'localhost'
+
+Esto ocurre en MySQL cuando la cuenta root usa autenticación `auth_socket` y la aplicación intenta usar contraseña.
+
+Solución:
+
+```sql
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'root';
+FLUSH PRIVILEGES;
+```
+
+### Puerto 8080 no responde
+
+Verificar:
+
+```bash
+sudo systemctl status apirest
+sudo journalctl -u apirest -n 100 --no-pager
+ss -lnt | grep 8080
+```
+
+## Equipo
+
+Equipo 8 - Desarrollo backend y servicios financieros.
+
+## Estado actual
+
+El backend se encuentra operativo en OCI y escucha en el puerto 8080, listo para ser consumido por el frontend o por clientes HTTP externos.
