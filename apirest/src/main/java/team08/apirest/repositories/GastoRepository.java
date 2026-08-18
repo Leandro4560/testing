@@ -8,5 +8,5 @@ import java.util.List;
 @Repository
 public interface GastoRepository extends JpaRepository<GastoModel, Long> {
     // Buscar gastos por ID cliente
-    List<GastoModel> findByUsuarioIdCliente(Long idCliente);
+    List<GastoModel> findByUsuarioIdCliente(String idCliente);
 }

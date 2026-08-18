@@ -33,12 +33,12 @@ public class UsuarioController{
     }
 
     @GetMapping( path = "/{id}")
-    public Optional<UsuarioModel> obtenerUsuarioporID(@PathVariable("id") Long id){
+    public Optional<UsuarioModel> obtenerUsuarioporID(@PathVariable("id") String id){
         return this.usuarioService.obtenerPorID(id);
     }
 
     @DeleteMapping( path = "/{id}")
-    public String eliminarPorID(@PathVariable("id") Long id){
+    public String eliminarPorID(@PathVariable("id") String id){
         boolean eliminado = this.usuarioService.eliminarUsuario(id);
         if (eliminado){
             return "Se elimino al usuario de id: " + id;
@@ -46,12 +46,12 @@ public class UsuarioController{
             return "No se pudo eliminar al usuario de id: " + id;
         }
     }
-    @GetMapping("/{perfilFinanciero}")
+    @GetMapping("/perfil/{perfilFinanciero}")
     public ArrayList<UsuarioModel> obtenerUsuariosPorPerfil(@PathVariable("perfilFinanciero") String perfilFinanciero) {
         return this.usuarioService.obtenerUsuariosPorPerfilFinanciero(perfilFinanciero);
     }
 
-    @GetMapping("/{meses_supervivencia}")
+    @GetMapping("/supervivencia-mayor-cero")
     public ArrayList<UsuarioModel> obtenerUsuariosConSupervivenciaMayorACero() {
         return this.usuarioService.obtenerUsuariosConSupervivenciaMayorACero();
     }

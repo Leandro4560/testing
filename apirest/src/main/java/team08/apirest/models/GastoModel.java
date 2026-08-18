@@ -1,5 +1,6 @@
 package team08.apirest.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -39,6 +40,7 @@ public class GastoModel {
     //RELACION CON USUARIO
     @ManyToOne
     @JoinColumn(name = "id_cliente", nullable = false) // FK
+    @JsonBackReference
     private UsuarioModel usuario;
 
     // CONSTRUCTOR

@@ -30,7 +30,7 @@ public class GastoController {
 
     // GET: Obtener los gastos de un cliente en especifico
     @GetMapping("/cliente/{idCliente}")
-    public List<GastoModel> obtenerGastosPorCliente(@PathVariable Long idCliente) {
+    public List<GastoModel> obtenerGastosPorCliente(@PathVariable String idCliente) {
         return gastoService.obtenerGastosPorCliente(idCliente);
     }
 

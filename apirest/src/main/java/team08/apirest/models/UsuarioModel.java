@@ -2,11 +2,10 @@ package team08.apirest.models;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -17,10 +16,9 @@ import jakarta.persistence.Table;
 public class UsuarioModel{
 
     // Variables privadas
-@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_cliente")
-    private Long idCliente;
+    @Id
+    @Column(name = "id_cliente", nullable = false, unique = true)
+    private String idCliente;
 
     @Column(name = "nombre")
     private String nombre;
@@ -59,22 +57,22 @@ public class UsuarioModel{
     private Long ahorroTotal;
 
     @Column(name = "ratio_ahorro_neto")
-    private Double ratioAhorroNeto;
+    private String ratioAhorroNeto;
 
     @Column(name = "ratio_endeudamiento_dti")
-    private Double ratioEndeudamientoDti;
+    private String ratioEndeudamientoDti;
 
     @Column(name = "gastos_esenciales_ratio")
-    private Double gastosEsencialesRatio;
+    private String gastosEsencialesRatio;
 
     @Column(name = "gastos_estilo_vida_ratio")
-    private Double gastosEstiloVidaRatio;
+    private String gastosEstiloVidaRatio;
 
     @Column(name = "meses_supervivencia")
-    private int mesesSupervivencia;
+    private String mesesSupervivencia;
 
     @Column(name = "frecuencia_transacciones_ocio")
-    private Double frecuenciaTransaccionesOcio;
+    private String frecuenciaTransaccionesOcio;
 
     @Column(name = "perfil_financiero")
     private String perfilFinanciero;
@@ -86,11 +84,12 @@ public class UsuarioModel{
     private Long ahorroPrevio;
 
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<GastoModel> gastos;
 
     // GETTERS & SETTERS
     
-    public Long getId() {
+    public String getId() {
         return idCliente;
     }
 
@@ -110,7 +109,7 @@ public class UsuarioModel{
         this.ahorroPrevio = ahorroPrevio;
     }
 
-    public void setId(Long idCliente) {
+    public void setId(String idCliente) {
         this.idCliente = idCliente;
     }
 
@@ -209,51 +208,51 @@ public class UsuarioModel{
         this.ahorroTotal = ahorroTotal;
     }
 
-    public Double getRatio_ahorro_neto() {
+    public String getRatio_ahorro_neto() {
         return ratioAhorroNeto;
     }
 
-    public void setRatio_ahorro_neto(Double ratioAhorroNeto) {
+    public void setRatio_ahorro_neto(String ratioAhorroNeto) {
         this.ratioAhorroNeto = ratioAhorroNeto;
     }
 
-    public Double getRatio_endeudamiento_dti() {
+    public String getRatio_endeudamiento_dti() {
         return ratioEndeudamientoDti;
     }
 
-    public void setRatio_endeudamiento_dti(Double ratioEndeudamientoDti) {
+    public void setRatio_endeudamiento_dti(String ratioEndeudamientoDti) {
         this.ratioEndeudamientoDti = ratioEndeudamientoDti;
     }
 
-    public Double getGastos_esenciales_ratio() {
+    public String getGastos_esenciales_ratio() {
         return gastosEsencialesRatio;
     }
 
-    public void setGastos_esenciales_ratio(Double gastosEsencialesRatio) {
+    public void setGastos_esenciales_ratio(String gastosEsencialesRatio) {
         this.gastosEsencialesRatio = gastosEsencialesRatio;
     }
 
-    public Double getGastos_estilo_vida_ratio() {
+    public String getGastos_estilo_vida_ratio() {
         return gastosEstiloVidaRatio;
     }
 
-    public void setGastos_estilo_vida_ratio(Double gastosEstiloVidaRatio) {
+    public void setGastos_estilo_vida_ratio(String gastosEstiloVidaRatio) {
         this.gastosEstiloVidaRatio = gastosEstiloVidaRatio;
     }
 
-    public int getMeses_supervivencia() {
+    public String getMeses_supervivencia() {
         return mesesSupervivencia;
     }
 
-    public void setMeses_supervivencia(int mesesSupervivencia) {
+    public void setMeses_supervivencia(String mesesSupervivencia) {
         this.mesesSupervivencia = mesesSupervivencia;
     }
 
-    public Double getFrecuencia_transacciones_ocio() {
+    public String getFrecuencia_transacciones_ocio() {
         return frecuenciaTransaccionesOcio;
     }
 
-    public void setFrecuencia_transacciones_ocio(Double frecuenciatransaccionesocio) {
+    public void setFrecuencia_transacciones_ocio(String frecuenciatransaccionesocio) {
         this.frecuenciaTransaccionesOcio = frecuenciatransaccionesocio;
     }
 

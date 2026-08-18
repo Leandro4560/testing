@@ -28,7 +28,7 @@ public class GastoService {
     }
 
     // Buscar gastos por el ID del cliente
-    public List<GastoModel> obtenerGastosPorCliente(Long idCliente) {
+    public List<GastoModel> obtenerGastosPorCliente(String idCliente) {
         return gastoRepository.findByUsuarioIdCliente(idCliente);
     }
 

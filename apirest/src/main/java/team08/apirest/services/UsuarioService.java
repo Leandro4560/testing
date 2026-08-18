@@ -43,7 +43,7 @@ public class UsuarioService{
     }
     
     // ELIMINAR UN USUARIO POR ID
-    public boolean eliminarUsuario(Long id){
+    public boolean eliminarUsuario(String id){
         try{
             usuarioRepository.deleteById(id);
             return true;
@@ -54,7 +54,7 @@ public class UsuarioService{
 
     }
     // BUSQUEDA DE UN USUARIO POR ID
-    public Optional<UsuarioModel> obtenerPorID(Long id){
+    public Optional<UsuarioModel> obtenerPorID(String id){
         return usuarioRepository.findById(id);
     }
 
@@ -65,7 +65,7 @@ public class UsuarioService{
 
     // BUSQUEDA DE USUARIOS CON MESES DE SUPERVIVENCIA MAYORES O IGUALES A
     public ArrayList<UsuarioModel> obtenerUsuariosConSupervivenciaMayorACero() {
-        return usuarioRepository.findByMesesSupervivenciaGreaterThan(0);
+        return usuarioRepository.findByMesesSupervivenciaGreaterThan("0");
     }
 }
 
